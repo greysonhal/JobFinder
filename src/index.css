@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    body{
+        background: conic-gradient(at center top, rgb(14, 165, 233), rgb(254, 215, 170), rgb(202, 138, 4))
+    }
+}
