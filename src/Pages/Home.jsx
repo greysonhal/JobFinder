@@ -77,22 +77,24 @@ const Home = () => {
       }
              
       //category filtering
-      if(selected){
-        filteredJobs= filteredJobs.filter(({jobLocation,maxPrice,experienceLevel,salaryType,employmentType,postingDate})=>(
-          
-          jobLocation.toLowerCase()===selected.toLowerCase() ||
-          parseInt(maxPrice)<=parseInt(selected)||
-          
-          salaryType.toLowerCase()===selected.toLowerCase()||
-          experienceLevel.toLowerCase()===selected.toLowerCase() ||
-          employmentType.toLowerCase()===selected.toLowerCase()
-          
-        ));
-        console.log(filteredJobs);
-        console.log(selected);
-
-       
+      if (selected) {
+        const selectedTimestamp = new Date(selected).setHours(0, 0, 0, 0);
+      
+        filteredJobs = filteredJobs.filter(({ postingDate, jobLocation,salaryType,experienceLevel,employmentType }) => {
+          const jobTimestamp = new Date(postingDate).setHours(0, 0, 0, 0);
+          return jobTimestamp >= selectedTimestamp || jobLocation.toLowerCase() === selected.toLowerCase()||
+          salaryType.toLowerCase() === selected.toLowerCase() ||
+          experienceLevel.toLowerCase() === selected.toLowerCase()||  employmentType.toLowerCase()===selected.toLowerCase()
+        });
+      
+        console.log('Filtered Jobs:', filteredJobs);
+        console.log('Selected:', selected);
       }
+      
+      
+      
+      
+      
       //Slice the data based on current page
       const {startIndex,endIndex}=calculatePageRange();
       filteredJobs= filteredJobs.slice(startIndex,endIndex);
@@ -112,7 +114,7 @@ const Home = () => {
          <div className=' md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12'>
 
           {/*---left side----*/}
-          <div className='bg-white p-4 rounded h-[1000px]'>
+          <div className='bg-white p-4 rounded h-[1200px]'>
             <Sidebar handleChange={handleChange} handleClick={handleClick}/>
           </div>
 
